@@ -63,4 +63,4 @@ cat > /etc/apache2/mods-enabled/dir.conf << EOM
 </IfModule>
 EOM
 
-sudo systemctl restart apache2
+systemctl restart apache2
