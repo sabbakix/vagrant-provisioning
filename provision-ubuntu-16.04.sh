@@ -39,7 +39,7 @@ systemctl restart apache2
 
 # Install Mysql
 echo "----- Provision: Installing Mysql ..."
- MYSQL_ROOT_PASSWORD=''
+ MYSQL_ROOT_PASSWORD='123'
 
  debconf-set-selections <<< "mysql-server mysql-server/root_password password $MYSQL_ROOT_PASSWORD"
  debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $MYSQL_ROOT_PASSWORD"
@@ -49,7 +49,18 @@ apt-get install -y mysql-server-5.7
 
 # TODO mysql_secure_installation
 
+
 # Install php and modules
 echo "----- Provision: Installing PHP ..."
-apt-get install -y php libapache2-mod-php php-mcrypt php-mysql
+apt-get install -y php libapache2-mod-php php-mcrypt php-mysql php-cli
 
+
+# Overwrite dir.conf 
+# tell apache to look at php files first
+cat > /etc/apache2/mods-enabled/dir.conf << EOM
+<IfModule mod_dir.c>
+    DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm
+</IfModule>
+EOM
+
+sudo systemctl restart apache2
