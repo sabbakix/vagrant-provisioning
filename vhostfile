@@ -4,7 +4,7 @@
         ServerName  magento2.dev
 
         # Index file and Document Root (where the public files are located)
-        DocumentRoot /var/www/
+        DocumentRoot /var/www/html
 
         # Custom log file locations
         LogLevel warn
@@ -12,7 +12,7 @@
         CustomLog ${APACHE_LOG_DIR}/access.log combined
 
         # Allow overrides in .htaccess file
-        <Directory /var/www/>
+        <Directory /var/www/html>
                 Options FollowSymLinks
                 AllowOverride All
         </Directory>
