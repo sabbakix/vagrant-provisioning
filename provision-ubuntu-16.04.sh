@@ -59,7 +59,7 @@ echo "----- Provision: Installing PHP ..."
 sudo apt-get install ppa-purge
 sudo apt-get purge php-common php
 
-apt-get install -y php php-common libapache2-mod-php php-mcrypt php-mysql php-cli
+apt-get install -y php php-common libapache2-mod-php php-mcrypt php-mysql php-cli php-mbstring
 
 # Install php mdules for magento2
 apt-get install -y php-mcrypt php-curl php-gd libcurl3 php-intl php-xsl php-zip
@@ -77,18 +77,6 @@ a2enmod php7.0
 systemctl restart apache2
 
 
-# magentp2 permissions
-echo "----- Provision: set Magento 2 Permissions ..."
-chmod -R ug+w /vagrant/html/app/etc
-chmod -R ug+w /vagrant/html/var
-chmod -R ug+w /vagrant/html/pub/media
-chmod -R ug+w /vagrant/html/pub/static
-chmod ug+x /vagrant/html/bin/magento
-
-
-
-
-
 # Overwrite dir.conf tell apache to look at php files first
 echo "----- Provision: Configure Apache..."
 cat > /etc/apache2/mods-enabled/dir.conf << EOM
@@ -98,10 +86,18 @@ cat > /etc/apache2/mods-enabled/dir.conf << EOM
 EOM
 
 
+# Set magentp2 permissions
+echo "----- Provision: set Magento 2 Permissions ..."
 
-# Set permissions
 #chgrp -R www-data /vagrant/html/
 #chmod -R g+w /vagrant/html/
+
+#chmod -R ug+w /vagrant/html/app/etc
+#chmod -R ug+w /vagrant/html/var
+#chmod -R ug+w /vagrant/html/pub/media
+#chmod -R ug+w /vagrant/html/pub/static
+#chmod ug+x /vagrant/html/bin/magento
+
 
 
 # Restart Apache
